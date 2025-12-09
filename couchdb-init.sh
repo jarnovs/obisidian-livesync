@@ -21,7 +21,7 @@ fi
 
 echo "-- Configuring CouchDB by REST APIs... -->"
 
-until (curl -X POST "${HOSTNAME}/_cluster_setup" -H "Content-Type: application/json" -d "{\"action\":\"enable_single_node\",\"username\":\"${COUCHDB_USER}\",\"password\":\"${COUCHDB_PASSWORD}\",\"bind_address\":\"0.0.0.0\",\"port\":5984,\"singlenode\":true}" --user "${COUCHDB_USER}:${password}"); do sleep 5; done
+until (curl -X POST "${HOSTNAME}/_cluster_setup" -H "Content-Type: application/json" -d "{\"action\":\"enable_single_node\",\"username\":\"${COUCHDB_USER}\",\"password\":\"${COUCHDB_PASSWORD}\",\"bind_address\":\"0.0.0.0\",\"port\":5984,\"singlenode\":true}" --user "${COUCHDB_USER}:${COUCHDB_PASSWORD}"); do sleep 5; done
 until (curl -X PUT "${HOSTNAME}/_node/${node}/_config/chttpd/require_valid_user" -H "Content-Type: application/json" -d '"true"' --user "${COUCHDB_USER}:${COUCHDB_PASSWORD}"); do sleep 5; done
 until (curl -X PUT "${HOSTNAME}/_node/${node}/_config/chttpd_auth/require_valid_user" -H "Content-Type: application/json" -d '"true"' --user "${COUCHDB_USER}:${COUCHDB_PASSWORD}"); do sleep 5; done
 until (curl -X PUT "${HOSTNAME}/_node/${node}/_config/httpd/WWW-Authenticate" -H "Content-Type: application/json" -d '"Basic realm=\"couchdb\""' --user "${COUCHDB_USER}:${COUCHDB_PASSWORD}"); do sleep 5; done
